@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: "en-US" }}">
+
+{% include head.html %}
+
+<body>
+
+  {% include header.html %}
+
+  <main class="page-content" aria-label="Content">
+    <div class="wrapper">
+      {{ content }}
+    </div>
+  </main>
+
+  <!-- 在这里添加 "subscribe" 链接 -->
+  <footer class="page-footer">
+    <div class="wrapper">
+      <a href="/subscribe/">Subscribe</a>
+    </div>
+  </footer>
+
+  {% include footer.html %}
+
+</body>
+
+</html>
