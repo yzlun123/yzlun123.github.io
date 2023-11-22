@@ -1,8 +1,9 @@
 ---
 layout: post
 title:  "我的第一篇博客文章"
-date:   2022-03-01
+date:   2023-11-21
 categories: jekyll update
+excerpt: say hello
 ---
 
 这是我的第一篇博客文章。欢迎阅读！
