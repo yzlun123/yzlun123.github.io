@@ -1,11 +1,11 @@
-title: 我的博客
-email: your-email@example.com
+title: 飞鸟
+# email: your-email@example.com
 description: >- # 这意味着将下面的文本作为一个字符串，但是删除前导空格
-  这是我的博客的描述。
+减熵生活
 baseurl: "" # 如果你的网站在一个子路径下，例如example.com/blog，你应该设置这个值为"/blog"
-url: "http://your-domain.com" # 你的网站的主URL
-twitter_username: jekyllrb
-github_username:  jekyll
+url: "https://yzlun123.github.io" # 你的网站的主URL
+# twitter_username: jekyllrb
+# github_username:  jekyll
 
 # Build settings
 markdown: kramdown
