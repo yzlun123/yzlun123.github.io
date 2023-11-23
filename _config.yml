@@ -11,6 +11,12 @@ categories:
   - Category 2
   - Category 3
 
+header_pages:
+  - index.md
+  - category1.md
+  - category2.md
+  - category3.md
+
 # Build settings
 markdown: kramdown
 theme: minima
