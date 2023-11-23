@@ -1,8 +1,8 @@
 <!-- _includes/header.html -->
 <nav>
   <ul>
-    {% for category in site.data.categories %}
-      <li><a href="{{ site.baseurl }}/categories/{{ category | slugify }}">{{ category }}</a></li>
+    {% for item in site.data.categories %}
+      <li><a href="{{ site.baseurl }}{{ item[1] }}">{{ item[0] }}</a></li>
     {% endfor %}
   </ul>
 </nav>
