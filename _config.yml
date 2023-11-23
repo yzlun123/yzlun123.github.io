@@ -13,9 +13,9 @@ categories:
 
 header_pages:
   - index.md
-  - category1.md
-  - category2.md
-  - category3.md
+  - category1.html
+  - category2.html
+  - category3.html
 
 # Build settings
 markdown: kramdown
