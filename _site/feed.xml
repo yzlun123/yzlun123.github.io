@@ -1,9 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-11-24T13:22:03+00:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">飞鸟</title><subtitle>减熵生活</subtitle><entry><title type="html">我的第一篇博客文章</title><link href="http://localhost:4000/jekyll/update/2023/11/21/my_first_post.html" rel="alternate" type="text/html" title="我的第一篇博客文章" /><published>2023-11-21T00:00:00+00:00</published><updated>2023-11-21T00:00:00+00:00</updated><id>http://localhost:4000/jekyll/update/2023/11/21/my_first_post</id><content type="html" xml:base="http://localhost:4000/jekyll/update/2023/11/21/my_first_post.html"><![CDATA[<p>这是我的第一篇博客文章。欢迎阅读！</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-11-24T15:00:28+00:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">飞鸟</title><subtitle>减熵生活</subtitle><entry><title type="html">我的第一篇博客文章：Jekyll + GitHub Codespaces + Pages + Copilot</title><link href="http://localhost:4000/something/new/2023/11/21/my_first_post.html" rel="alternate" type="text/html" title="我的第一篇博客文章：Jekyll + GitHub Codespaces + Pages + Copilot" /><published>2023-11-21T00:00:00+00:00</published><updated>2023-11-21T00:00:00+00:00</updated><id>http://localhost:4000/something/new/2023/11/21/my_first_post</id><content type="html" xml:base="http://localhost:4000/something/new/2023/11/21/my_first_post.html"><![CDATA[<p>这是我的第一篇博客文章。欢迎阅读！</p>
 
-<h1 id="标题1">标题1</h1>
+<h2 id="背景">背景</h2>
+<p>WordPress除了文章发布，很多高级特性用不到，主机明年到期，便产生了使用Jekyll替代的想法。</p>
 
-<p>这是一些内容。</p>
+<h2 id="尝试">尝试</h2>
+<ol>
+  <li>创建domin.github.io的仓库；</li>
+  <li>用GitHub Codespaces打开仓库，使用GitHub Copilot，询问Jekyll + GitHub Pages部署步骤及代码；</li>
+  <li>bundle exec jekyll serve，发布！</li>
+</ol>
 
-<h2 id="标题2">标题2</h2>
+<h2 id="总结">总结</h2>
+<p>GitHub Copilot这类大语言模型的出现，极大降低了新手的门槛，带来了新的学习模式的改变。</p>
 
-<p>这是一些更多的内容。</p>]]></content><author><name></name></author><category term="jekyll" /><category term="update" /><summary type="html"><![CDATA[say hello]]></summary></entry></feed>
+<h2 id="版本记录">版本记录</h2>
+<p>2023-11-21，初稿；</p>]]></content><author><name></name></author><category term="Something" /><category term="New" /><summary type="html"><![CDATA[记录第一篇Jekyll博客，基于Jekyll + GitHub Codespaces + Pages + Copilot搭建]]></summary></entry></feed>
