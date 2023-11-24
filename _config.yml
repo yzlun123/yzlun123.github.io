@@ -6,16 +6,6 @@ baseurl: "" # 如果你的网站在一个子路径下，例如example.com/blog�
 url: "https://yzlun123.github.io" # 你的网站的主URL
 # twitter_username: jekyllrb
 # github_username:  jekyll
-categories:
-  - Category 1
-  - Category 2
-  - Category 3
-
-header_pages:
-  - index.md
-  - category1.html
-  - category2.html
-  - category3.html
 
 # Build settings
 markdown: kramdown
