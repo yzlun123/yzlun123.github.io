@@ -2,7 +2,7 @@
 layout: post
 title:  "我的第一篇博客文章：Jekyll + GitHub Codespaces + Pages + Copilot"
 date:   2023-11-21
-categories: Something New
+categories: Something_New
 excerpt: 记录第一篇Jekyll博客，基于Jekyll + GitHub Codespaces + Pages + Copilot搭建
 published: true
 ---
