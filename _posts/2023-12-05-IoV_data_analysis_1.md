@@ -4,7 +4,7 @@ title: "车联网数据分析（一）：数据准备及分析流程"
 date: 2023-12-05
 categories: Data_Science
 excerpt: 车联网数据分析的准备工作以及分析流程
-published: false
+published: true
 ---
 
 最近两年从事一些车联网数据分析的工作，做一些总结。  
