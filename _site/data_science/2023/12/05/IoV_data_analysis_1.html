@@ -50,10 +50,18 @@
     <p>最近两年从事一些车联网数据分析的工作，做一些总结。</p>
 
 <h2 id="数据准备">数据准备</h2>
-<p>数据采集数据流</p>
-<pre><code class="language-mermaid">graph LR
+<p>数据采集数据流<br />
+<!-- _includes/mermaid.html -->
+<script src="/assets/js/mermaid.min.js"></script></p>
+<div class="mermaid">
+  
+graph LR
     A[接入] --&gt; B[清洗及分析建模] --&gt; C[可视化开发] --&gt; D[管理封闭]
-</code></pre>
+
+</div>
+<script>
+  mermaid.initialize({startOnLoad:true});
+</script>
 
 <h2 id="分析流程">分析流程</h2>
 <ol>

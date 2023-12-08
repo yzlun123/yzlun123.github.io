@@ -1,10 +1,18 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-12-08T19:00:57+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">yzlun’s blog</title><entry><title type="html">车联网数据分析（一）：数据准备及分析流程</title><link href="http://localhost:4000/data_science/2023/12/05/IoV_data_analysis_1.html" rel="alternate" type="text/html" title="车联网数据分析（一）：数据准备及分析流程" /><published>2023-12-05T00:00:00+08:00</published><updated>2023-12-05T00:00:00+08:00</updated><id>http://localhost:4000/data_science/2023/12/05/IoV_data_analysis_1</id><content type="html" xml:base="http://localhost:4000/data_science/2023/12/05/IoV_data_analysis_1.html"><![CDATA[<p>最近两年从事一些车联网数据分析的工作，做一些总结。</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-12-08T21:37:57+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">yzlun’s blog</title><entry><title type="html">车联网数据分析（一）：数据准备及分析流程</title><link href="http://localhost:4000/data_science/2023/12/05/IoV_data_analysis_1.html" rel="alternate" type="text/html" title="车联网数据分析（一）：数据准备及分析流程" /><published>2023-12-05T00:00:00+08:00</published><updated>2023-12-05T00:00:00+08:00</updated><id>http://localhost:4000/data_science/2023/12/05/IoV_data_analysis_1</id><content type="html" xml:base="http://localhost:4000/data_science/2023/12/05/IoV_data_analysis_1.html"><![CDATA[<p>最近两年从事一些车联网数据分析的工作，做一些总结。</p>
 
 <h2 id="数据准备">数据准备</h2>
-<p>数据采集数据流</p>
-<pre><code class="language-mermaid">graph LR
+<p>数据采集数据流<br />
+<!-- _includes/mermaid.html -->
+<script src="/assets/js/mermaid.min.js"></script></p>
+<div class="mermaid">
+  
+graph LR
     A[接入] --&gt; B[清洗及分析建模] --&gt; C[可视化开发] --&gt; D[管理封闭]
-</code></pre>
+
+</div>
+<script>
+  mermaid.initialize({startOnLoad:true});
+</script>
 
 <h2 id="分析流程">分析流程</h2>
 <ol>

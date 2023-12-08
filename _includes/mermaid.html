@@ -1,2 +1,8 @@
-<script src="{{ "/assets/js/mermaid.min.js" | relative_url }}"></script>
-<script>mermaid.initialize({ startOnLoad: true });</script>
+<!-- _includes/mermaid.html -->
+<script src="/assets/js/mermaid.min.js"></script>
+<div class="mermaid">
+  {{ include.content }}
+</div>
+<script>
+  mermaid.initialize({startOnLoad:true});
+</script>

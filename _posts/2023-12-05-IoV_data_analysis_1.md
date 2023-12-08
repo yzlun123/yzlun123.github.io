@@ -11,10 +11,10 @@ published: true
 
 ## 数据准备
 数据采集数据流  
-```mermaid
+{% include mermaid.html content="
 graph LR
     A[接入] --> B[清洗及分析建模] --> C[可视化开发] --> D[管理封闭]
-```  
+" %}  
 
 ## 分析流程
 1. 创建domin.github.io的仓库；
