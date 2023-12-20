@@ -1,32 +1,40 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-12-08T22:30:54+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">yzlun’s blog</title><entry><title type="html">车联网数据分析（一）：数据采集及数据质量监控</title><link href="http://localhost:4000/data_science/2023/12/05/IoV_data_analysis_1.html" rel="alternate" type="text/html" title="车联网数据分析（一）：数据采集及数据质量监控" /><published>2023-12-05T00:00:00+08:00</published><updated>2023-12-05T00:00:00+08:00</updated><id>http://localhost:4000/data_science/2023/12/05/IoV_data_analysis_1</id><content type="html" xml:base="http://localhost:4000/data_science/2023/12/05/IoV_data_analysis_1.html"><![CDATA[<p>最近两年从事一些车联网数据分析的工作，做一些总结。</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-12-20T21:28:06+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">yzlun’s blog</title><entry><title type="html">车联网数据分析（一）：数据采集及数据质量监控</title><link href="http://localhost:4000/data_science/2023/12/05/IoV_data_analysis_1.html" rel="alternate" type="text/html" title="车联网数据分析（一）：数据采集及数据质量监控" /><published>2023-12-05T00:00:00+08:00</published><updated>2023-12-05T00:00:00+08:00</updated><id>http://localhost:4000/data_science/2023/12/05/IoV_data_analysis_1</id><content type="html" xml:base="http://localhost:4000/data_science/2023/12/05/IoV_data_analysis_1.html"><![CDATA[<p>最近两年从事一些车联网数据分析的工作，做一些总结。</p>
 
 <h2 id="数据采集">数据采集</h2>
+<h3 id="动态数据采集">动态数据采集</h3>
 <!-- _includes/mermaid.html -->
 <script src="/assets/js/mermaid.min.js"></script>
 
 <div class="mermaid">
   
 flowchart LR
-    subgraph 若需要
-    E[(数据库)] -. 网络专线 .-&gt; G[车企平台2]
-    end
-    subgraph 数据采集
-    A[车企采集配置管理平台] -- 配置下发 --&gt;  B[车载终端] -- 移动网络 --&gt; C[车企平台] 
-    D[整车传感器] -- CAN --&gt; B
-    C ----&gt; E[(数据库)] 
-    end
+    A[车企平台] -- 配置下发 --&gt;  B[终端采集数据] -- 移动网络 --&gt; C[消息队列] -- 数据存储 --&gt; E[(数据库)] 
 
 </div>
 <script>
   mermaid.initialize({startOnLoad:true});
 </script>
 
-<h2 id="常见问题">常见问题</h2>
+<h3 id="静态数据">静态数据</h3>
+<p>静态数据一般使用整车VIN码或终端编号作为主键，与企业内的其他产品信息，如车辆型号、动力总成配置等关联，便于多维度数据分析。</p>
+
+<h2 id="遇到的问题及解决方案">遇到的问题及解决方案</h2>
+<ol>
+  <li><strong>静态信息不准确，如整车编号缺失、型号不对等</strong><br />
+没有好的办法，只能从源头解决，通过主数据、多表关联、预处理规则等来解决。</li>
+  <li><strong>动态数据质量评价，如数据流、OBD流等</strong><br />
+一阶段是通过静态信息、数据流、OBD流等关键重要项评分，进行单车评价，进而聚合为整个数据源的评价，直观性不够；<br />
+二阶段是通过丢包、丢条、数据频率等算法开发，进行数据评价，指标太多，实用性不强；
+现阶段用的是数据流和OBD流互相校验的方式，每天生成一个值，通过一段时间（一般两周）的趋势分析，来判断数据质量。</li>
+  <li><strong>部分终端一些参数无法采集</strong><br />
+分析异常时发现车辆终端编号规律，进而锁定终端厂家原因。</li>
+</ol>
 
 <h2 id="总结">总结</h2>
+<p>问题一般出在静态信息质量不高、数据流或OBD流回传异常上，通过监控可以判断出来，采取补录等措施。</p>
 
 <h2 id="版本记录">版本记录</h2>
-<p>2023-12-05，初稿；</p>]]></content><author><name></name></author><category term="Data_Science" /><summary type="html"><![CDATA[车联网数据分析的数据采集及数据质量监控]]></summary></entry><entry><title type="html">我的第一篇博客文章：Jekyll + GitHub Codespaces + Pages + Copilot</title><link href="http://localhost:4000/something_new/2023/11/21/my_first_post.html" rel="alternate" type="text/html" title="我的第一篇博客文章：Jekyll + GitHub Codespaces + Pages + Copilot" /><published>2023-11-21T00:00:00+08:00</published><updated>2023-11-21T00:00:00+08:00</updated><id>http://localhost:4000/something_new/2023/11/21/my_first_post</id><content type="html" xml:base="http://localhost:4000/something_new/2023/11/21/my_first_post.html"><![CDATA[<p>这是我的第一篇博客文章。欢迎阅读！</p>
+<p>2023-12-05，初稿。</p>]]></content><author><name></name></author><category term="Data_Science" /><summary type="html"><![CDATA[车联网数据分析的数据采集及数据质量监控]]></summary></entry><entry><title type="html">我的第一篇博客文章：Jekyll + GitHub Codespaces + Pages + Copilot</title><link href="http://localhost:4000/something_new/2023/11/21/my_first_post.html" rel="alternate" type="text/html" title="我的第一篇博客文章：Jekyll + GitHub Codespaces + Pages + Copilot" /><published>2023-11-21T00:00:00+08:00</published><updated>2023-11-21T00:00:00+08:00</updated><id>http://localhost:4000/something_new/2023/11/21/my_first_post</id><content type="html" xml:base="http://localhost:4000/something_new/2023/11/21/my_first_post.html"><![CDATA[<p>这是我的第一篇博客文章。欢迎阅读！</p>
 
 <h2 id="背景">背景</h2>
 <p>WordPress除了文章发布，很多高级特性用不到，主机明年到期，便产生了使用Jekyll替代的想法。</p>
