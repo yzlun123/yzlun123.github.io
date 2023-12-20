@@ -47,7 +47,20 @@
   </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p>最近两年从事一些车联网数据分析的工作，做一些总结。</p>
+    <p>最近两年从事一些车联网数据分析的工作，做一些总结，本文属于<strong>数据接入及清洗</strong>部分。</p>
+
+<!-- _includes/mermaid.html -->
+<script src="/assets/js/mermaid.min.js"></script>
+
+<div class="mermaid">
+  
+flowchart LR
+    A[数据接入及清洗] ----&gt;  B[数据处理] ----&gt; C[分析建模] ----&gt; E[管理及封闭] 
+
+</div>
+<script>
+  mermaid.initialize({startOnLoad:true});
+</script>
 
 <h2 id="数据采集">数据采集</h2>
 <h3 id="动态数据采集">动态数据采集</h3>
