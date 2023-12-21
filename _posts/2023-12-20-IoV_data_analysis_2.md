@@ -3,11 +3,11 @@ layout: post
 title: "车联网数据分析（二）：数据分析架构建设"
 date: 2023-12-20
 categories: Data_Science
-excerpt: 车联网数据分析的数据采集及数据质量监控
+excerpt: 最近两年从事一些车联网数据分析的工作，做一些总结，此部分关于车联网数据分析的数据采集及数据质量监控
 published: false
 ---
 
-最近两年从事一些车联网数据分析的工作，做一些总结，本文属于**数据处理**部分。  
+车联网数据分析包括数据接入、分析建模、可视化、问题管理封闭，本文属于**分析建模**部分。  
 
 {% include mermaid.html content="
 flowchart LR
