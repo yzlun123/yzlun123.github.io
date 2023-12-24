@@ -9,11 +9,6 @@ published: false
 
 车联网数据分析包括数据接入、分析建模、可视化、问题管理封闭，本文属于**分析建模**部分。  
 
-{% include mermaid.html content="
-flowchart LR
-    A[数据接入及清洗] ---->  B[数据处理] ----> C[分析建模] ----> E[管理及封闭] 
-" %}  
-
 ## 数据采集
 ### 动态数据采集  
 {% include mermaid.html content="
