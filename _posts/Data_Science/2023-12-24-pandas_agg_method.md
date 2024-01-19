@@ -63,7 +63,7 @@ result_df = df.groupby(['target'], as_index=False).agg(
 
 # another way
 cols = ['sepal length (cm)', 'sepal width (cm)']
-result_df = df.groupby(['target'], as_index=False)[cols].agg(
+result_df = df.groupby(['target'], as_index=False).agg(
     {
         'sepal length (cm)': [('Mean', 'mean'), ('Std', 'std'), ('Min', 'min'), ('10% Quantile', lambda x: x.quantile(0.1))],
         'sepal width (cm)': [('Mean', 'mean'), ('Std', 'std'), ('Min', 'min'), ('10% Quantile', lambda x: x.quantile(0.1))],
