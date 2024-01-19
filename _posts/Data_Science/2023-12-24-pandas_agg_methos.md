@@ -28,6 +28,14 @@ df = df0.merge(df1, left_index=True, right_index=True)
 ```python
 # only one columns
 result_df = df.groupby(['target'], as_index=False)['sepal length (cm)'].agg(
+    Mean = 'mean',
+    Std = 'std',
+    Min = 'min',
+    TenQuantile= lambda x: x.quantile(0.1)
+)
+
+# another way
+result_df = df.groupby(['target'], as_index=False)['sepal length (cm)'].agg(
     {
         'Mean': 'mean',
         'Std': 'std',
@@ -42,6 +50,18 @@ print(result_df)
 ## 对多列数据聚合处理
 ```python
 # multiple columns
+result_df = df.groupby(['target'], as_index=False).agg(
+    sl_mean = ('sepal length (cm)', 'mean'), 
+    sl_std = ('sepal length (cm)', 'std'), 
+    sl_min = ('sepal length (cm)', 'min'), 
+    sl_tenquantile = ('sepal length (cm)', lambda x: x.quantile(0.1)),
+    sw_mean = ('sepal width (cm)', 'mean'), 
+    sw_std = ('sepal width (cm)', 'std'), 
+    sw_min = ('sepal width (cm)', 'min'), 
+    sw_tenquantile = ('sepal width (cm)', lambda x: x.quantile(0.1)),
+)
+
+# another way
 cols = ['sepal length (cm)', 'sepal width (cm)']
 result_df = df.groupby(['target'], as_index=False)[cols].agg(
     {
@@ -73,4 +93,5 @@ print(result_df)
 如果聚合的话，这种方法会报错，还没能解决。  
 
 ## 版本记录
-2023-12-24，初稿。  
+2023-12-24，初稿  
+2024-01-19，增加另外一种方式，更简明

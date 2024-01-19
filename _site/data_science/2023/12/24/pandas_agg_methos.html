@@ -66,6 +66,14 @@
 <h2 id="对单列数据聚合处理">对单列数据聚合处理</h2>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># only one columns
 </span><span class="n">result_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">groupby</span><span class="p">([</span><span class="s">'target'</span><span class="p">],</span> <span class="n">as_index</span><span class="o">=</span><span class="bp">False</span><span class="p">)[</span><span class="s">'sepal length (cm)'</span><span class="p">].</span><span class="n">agg</span><span class="p">(</span>
+    <span class="n">Mean</span> <span class="o">=</span> <span class="s">'mean'</span><span class="p">,</span>
+    <span class="n">Std</span> <span class="o">=</span> <span class="s">'std'</span><span class="p">,</span>
+    <span class="n">Min</span> <span class="o">=</span> <span class="s">'min'</span><span class="p">,</span>
+    <span class="n">TenQuantile</span><span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="c1"># another way
+</span><span class="n">result_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">groupby</span><span class="p">([</span><span class="s">'target'</span><span class="p">],</span> <span class="n">as_index</span><span class="o">=</span><span class="bp">False</span><span class="p">)[</span><span class="s">'sepal length (cm)'</span><span class="p">].</span><span class="n">agg</span><span class="p">(</span>
     <span class="p">{</span>
         <span class="s">'Mean'</span><span class="p">:</span> <span class="s">'mean'</span><span class="p">,</span>
         <span class="s">'Std'</span><span class="p">:</span> <span class="s">'std'</span><span class="p">,</span>
@@ -79,6 +87,18 @@
 
 <h2 id="对多列数据聚合处理">对多列数据聚合处理</h2>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># multiple columns
+</span><span class="n">result_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">groupby</span><span class="p">([</span><span class="s">'target'</span><span class="p">],</span> <span class="n">as_index</span><span class="o">=</span><span class="bp">False</span><span class="p">).</span><span class="n">agg</span><span class="p">(</span>
+    <span class="n">sl_mean</span> <span class="o">=</span> <span class="p">(</span><span class="s">'sepal length (cm)'</span><span class="p">,</span> <span class="s">'mean'</span><span class="p">),</span> 
+    <span class="n">sl_std</span> <span class="o">=</span> <span class="p">(</span><span class="s">'sepal length (cm)'</span><span class="p">,</span> <span class="s">'std'</span><span class="p">),</span> 
+    <span class="n">sl_min</span> <span class="o">=</span> <span class="p">(</span><span class="s">'sepal length (cm)'</span><span class="p">,</span> <span class="s">'min'</span><span class="p">),</span> 
+    <span class="n">sl_tenquantile</span> <span class="o">=</span> <span class="p">(</span><span class="s">'sepal length (cm)'</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)),</span>
+    <span class="n">sw_mean</span> <span class="o">=</span> <span class="p">(</span><span class="s">'sepal width (cm)'</span><span class="p">,</span> <span class="s">'mean'</span><span class="p">),</span> 
+    <span class="n">sw_std</span> <span class="o">=</span> <span class="p">(</span><span class="s">'sepal width (cm)'</span><span class="p">,</span> <span class="s">'std'</span><span class="p">),</span> 
+    <span class="n">sw_min</span> <span class="o">=</span> <span class="p">(</span><span class="s">'sepal width (cm)'</span><span class="p">,</span> <span class="s">'min'</span><span class="p">),</span> 
+    <span class="n">sw_tenquantile</span> <span class="o">=</span> <span class="p">(</span><span class="s">'sepal width (cm)'</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)),</span>
+<span class="p">)</span>
+
+<span class="c1"># another way
 </span><span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="s">'sepal length (cm)'</span><span class="p">,</span> <span class="s">'sepal width (cm)'</span><span class="p">]</span>
 <span class="n">result_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">groupby</span><span class="p">([</span><span class="s">'target'</span><span class="p">],</span> <span class="n">as_index</span><span class="o">=</span><span class="bp">False</span><span class="p">)[</span><span class="n">cols</span><span class="p">].</span><span class="n">agg</span><span class="p">(</span>
     <span class="p">{</span>
@@ -109,7 +129,8 @@
 <p>如果聚合的话，这种方法会报错，还没能解决。</p>
 
 <h2 id="版本记录">版本记录</h2>
-<p>2023-12-24，初稿。</p>
+<p>2023-12-24，初稿<br />
+2024-01-19，增加另外一种方式，更简明</p>
 
   </div><a class="u-url" href="/data_science/2023/12/24/pandas_agg_methos.html" hidden></a>
 </article>

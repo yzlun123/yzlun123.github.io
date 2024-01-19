@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-12-31T09:33:24+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">yzlun’s blog</title><entry><title type="html">pandas agg方法浅谈</title><link href="http://localhost:4000/data_science/2023/12/24/pandas_agg_methos.html" rel="alternate" type="text/html" title="pandas agg方法浅谈" /><published>2023-12-24T00:00:00+08:00</published><updated>2023-12-24T00:00:00+08:00</updated><id>http://localhost:4000/data_science/2023/12/24/pandas_agg_methos</id><content type="html" xml:base="http://localhost:4000/data_science/2023/12/24/pandas_agg_methos.html"><![CDATA[<p>数据分析使用pandas，在聚合groupby的情况下，经常使用agg方法来计算多个统计值，如极值、平均值、分位值等，在计算对象是单列、多列条件下，如何使用。</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-01-19T20:06:17+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">yzlun’s blog</title><entry><title type="html">pandas agg方法浅谈</title><link href="http://localhost:4000/data_science/2023/12/24/pandas_agg_methos.html" rel="alternate" type="text/html" title="pandas agg方法浅谈" /><published>2023-12-24T00:00:00+08:00</published><updated>2023-12-24T00:00:00+08:00</updated><id>http://localhost:4000/data_science/2023/12/24/pandas_agg_methos</id><content type="html" xml:base="http://localhost:4000/data_science/2023/12/24/pandas_agg_methos.html"><![CDATA[<p>数据分析使用pandas，在聚合groupby的情况下，经常使用agg方法来计算多个统计值，如极值、平均值、分位值等，在计算对象是单列、多列条件下，如何使用。</p>
 
 <h2 id="数据准备">数据准备</h2>
 <p>使用鸢尾花数据，转换为pandas dataframe使用。</p>
@@ -17,6 +17,14 @@
 <h2 id="对单列数据聚合处理">对单列数据聚合处理</h2>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># only one columns
 </span><span class="n">result_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">groupby</span><span class="p">([</span><span class="s">'target'</span><span class="p">],</span> <span class="n">as_index</span><span class="o">=</span><span class="bp">False</span><span class="p">)[</span><span class="s">'sepal length (cm)'</span><span class="p">].</span><span class="n">agg</span><span class="p">(</span>
+    <span class="n">Mean</span> <span class="o">=</span> <span class="s">'mean'</span><span class="p">,</span>
+    <span class="n">Std</span> <span class="o">=</span> <span class="s">'std'</span><span class="p">,</span>
+    <span class="n">Min</span> <span class="o">=</span> <span class="s">'min'</span><span class="p">,</span>
+    <span class="n">TenQuantile</span><span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="c1"># another way
+</span><span class="n">result_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">groupby</span><span class="p">([</span><span class="s">'target'</span><span class="p">],</span> <span class="n">as_index</span><span class="o">=</span><span class="bp">False</span><span class="p">)[</span><span class="s">'sepal length (cm)'</span><span class="p">].</span><span class="n">agg</span><span class="p">(</span>
     <span class="p">{</span>
         <span class="s">'Mean'</span><span class="p">:</span> <span class="s">'mean'</span><span class="p">,</span>
         <span class="s">'Std'</span><span class="p">:</span> <span class="s">'std'</span><span class="p">,</span>
@@ -30,6 +38,18 @@
 
 <h2 id="对多列数据聚合处理">对多列数据聚合处理</h2>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># multiple columns
+</span><span class="n">result_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">groupby</span><span class="p">([</span><span class="s">'target'</span><span class="p">],</span> <span class="n">as_index</span><span class="o">=</span><span class="bp">False</span><span class="p">).</span><span class="n">agg</span><span class="p">(</span>
+    <span class="n">sl_mean</span> <span class="o">=</span> <span class="p">(</span><span class="s">'sepal length (cm)'</span><span class="p">,</span> <span class="s">'mean'</span><span class="p">),</span> 
+    <span class="n">sl_std</span> <span class="o">=</span> <span class="p">(</span><span class="s">'sepal length (cm)'</span><span class="p">,</span> <span class="s">'std'</span><span class="p">),</span> 
+    <span class="n">sl_min</span> <span class="o">=</span> <span class="p">(</span><span class="s">'sepal length (cm)'</span><span class="p">,</span> <span class="s">'min'</span><span class="p">),</span> 
+    <span class="n">sl_tenquantile</span> <span class="o">=</span> <span class="p">(</span><span class="s">'sepal length (cm)'</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)),</span>
+    <span class="n">sw_mean</span> <span class="o">=</span> <span class="p">(</span><span class="s">'sepal width (cm)'</span><span class="p">,</span> <span class="s">'mean'</span><span class="p">),</span> 
+    <span class="n">sw_std</span> <span class="o">=</span> <span class="p">(</span><span class="s">'sepal width (cm)'</span><span class="p">,</span> <span class="s">'std'</span><span class="p">),</span> 
+    <span class="n">sw_min</span> <span class="o">=</span> <span class="p">(</span><span class="s">'sepal width (cm)'</span><span class="p">,</span> <span class="s">'min'</span><span class="p">),</span> 
+    <span class="n">sw_tenquantile</span> <span class="o">=</span> <span class="p">(</span><span class="s">'sepal width (cm)'</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)),</span>
+<span class="p">)</span>
+
+<span class="c1"># another way
 </span><span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="s">'sepal length (cm)'</span><span class="p">,</span> <span class="s">'sepal width (cm)'</span><span class="p">]</span>
 <span class="n">result_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">groupby</span><span class="p">([</span><span class="s">'target'</span><span class="p">],</span> <span class="n">as_index</span><span class="o">=</span><span class="bp">False</span><span class="p">)[</span><span class="n">cols</span><span class="p">].</span><span class="n">agg</span><span class="p">(</span>
     <span class="p">{</span>
@@ -60,7 +80,8 @@
 <p>如果聚合的话，这种方法会报错，还没能解决。</p>
 
 <h2 id="版本记录">版本记录</h2>
-<p>2023-12-24，初稿。</p>]]></content><author><name></name></author><category term="Data_Science" /><summary type="html"><![CDATA[数据分析使用pandas，在聚合groupby的情况下，经常使用agg方法来计算多个统计值，如极值、平均值、分位值等，在计算对象是单列、多列条件下，如何使用。]]></summary></entry><entry><title type="html">车联网数据分析（一）：数据采集及数据质量监控</title><link href="http://localhost:4000/data_science/2023/12/05/IoV_data_analysis_1.html" rel="alternate" type="text/html" title="车联网数据分析（一）：数据采集及数据质量监控" /><published>2023-12-05T00:00:00+08:00</published><updated>2023-12-05T00:00:00+08:00</updated><id>http://localhost:4000/data_science/2023/12/05/IoV_data_analysis_1</id><content type="html" xml:base="http://localhost:4000/data_science/2023/12/05/IoV_data_analysis_1.html"><![CDATA[<p>车联网数据分析包括数据接入、分析建模、可视化、问题管理封闭，本文属于<strong>数据接入</strong>部分。</p>
+<p>2023-12-24，初稿<br />
+2024-01-19，增加另外一种方式，更简明</p>]]></content><author><name></name></author><category term="Data_Science" /><summary type="html"><![CDATA[数据分析使用pandas，在聚合groupby的情况下，经常使用agg方法来计算多个统计值，如极值、平均值、分位值等，在计算对象是单列、多列条件下，如何使用。]]></summary></entry><entry><title type="html">车联网数据分析（一）：数据采集及数据质量监控</title><link href="http://localhost:4000/data_science/2023/12/05/IoV_data_analysis_1.html" rel="alternate" type="text/html" title="车联网数据分析（一）：数据采集及数据质量监控" /><published>2023-12-05T00:00:00+08:00</published><updated>2023-12-05T00:00:00+08:00</updated><id>http://localhost:4000/data_science/2023/12/05/IoV_data_analysis_1</id><content type="html" xml:base="http://localhost:4000/data_science/2023/12/05/IoV_data_analysis_1.html"><![CDATA[<p>车联网数据分析包括数据接入、分析建模、可视化、问题管理封闭，本文属于<strong>数据接入</strong>部分。</p>
 
 <h2 id="数据采集">数据采集</h2>
 <h3 id="动态数据采集">动态数据采集</h3>
