@@ -1,39 +1,47 @@
 <!DOCTYPE html>
-<html lang="en"><head>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>sql避坑1：当涉及两表关联聚合计算时，应填充空值、分别聚合计算至没有结果表外的维度后，再进行结果表的关联和计算 | yzlun’s blog</title>
-<meta name="generator" content="Jekyll v4.2.2" />
-<meta property="og:title" content="sql避坑1：当涉及两表关联聚合计算时，应填充空值、分别聚合计算至没有结果表外的维度后，再进行结果表的关联和计算" />
-<meta property="og:locale" content="en_US" />
-<meta name="description" content="在对两表进行关联及聚合运算时，经常出现结果不一致的情况，对原因进行了分析。" />
-<meta property="og:description" content="在对两表进行关联及聚合运算时，经常出现结果不一致的情况，对原因进行了分析。" />
-<link rel="canonical" href="http://localhost:4000/data_science/2024/01/19/sql_rule_1.html" />
-<meta property="og:url" content="http://localhost:4000/data_science/2024/01/19/sql_rule_1.html" />
-<meta property="og:site_name" content="yzlun’s blog" />
-<meta property="og:type" content="article" />
-<meta property="article:published_time" content="2024-01-19T00:00:00+00:00" />
-<meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="sql避坑1：当涉及两表关联聚合计算时，应填充空值、分别聚合计算至没有结果表外的维度后，再进行结果表的关联和计算" />
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="sql避坑1：当涉及两表关联聚合计算时，应填充空值、分别聚合计算至没有结果表外的维度后，再进行结果表的关联和计算">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="在对两表进行关联及聚合运算时，经常出现结果不一致的情况，对原因进行了分析。">
+<meta property="og:description" content="在对两表进行关联及聚合运算时，经常出现结果不一致的情况，对原因进行了分析。">
+<link rel="canonical" href="http://localhost:4000/data_science/2024/01/19/sql_rule_1.html">
+<meta property="og:url" content="http://localhost:4000/data_science/2024/01/19/sql_rule_1.html">
+<meta property="og:site_name" content="yzlun’s blog">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2024-01-19T00:00:00+08:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="sql避坑1：当涉及两表关联聚合计算时，应填充空值、分别聚合计算至没有结果表外的维度后，再进行结果表的关联和计算">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2024-01-19T00:00:00+00:00","datePublished":"2024-01-19T00:00:00+00:00","description":"在对两表进行关联及聚合运算时，经常出现结果不一致的情况，对原因进行了分析。","headline":"sql避坑1：当涉及两表关联聚合计算时，应填充空值、分别聚合计算至没有结果表外的维度后，再进行结果表的关联和计算","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/data_science/2024/01/19/sql_rule_1.html"},"url":"http://localhost:4000/data_science/2024/01/19/sql_rule_1.html"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2024-01-19T00:00:00+08:00","datePublished":"2024-01-19T00:00:00+08:00","description":"在对两表进行关联及聚合运算时，经常出现结果不一致的情况，对原因进行了分析。","headline":"sql避坑1：当涉及两表关联聚合计算时，应填充空值、分别聚合计算至没有结果表外的维度后，再进行结果表的关联和计算","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/data_science/2024/01/19/sql_rule_1.html"},"url":"http://localhost:4000/data_science/2024/01/19/sql_rule_1.html"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="yzlun&apos;s blog" /></head>
-<body><header class="site-header" role="banner">
+<link rel="stylesheet" href="/assets/main.css">
+<link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="yzlun's blog">
+</head>
+<body>
+<header class="site-header" role="banner">
 
-  <div class="wrapper"><a class="site-title" rel="author" href="/">yzlun&#39;s blog</a><nav class="site-nav">
-        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+  <div class="wrapper">
+<a class="site-title" rel="author" href="/">yzlun's blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger">
         <label for="nav-trigger">
           <span class="menu-icon">
-            <svg viewBox="0 0 18 15" width="18px" height="15px">
-              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            <svg viewbox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
             </svg>
           </span>
         </label>
 
         <div class="trigger"><a class="page-link" href="/about/">关于</a></div>
-      </nav></div>
+      </nav>
+</div>
 </header>
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
@@ -42,7 +50,7 @@
   <header class="post-header">
     <h1 class="post-title p-name" itemprop="name headline">sql避坑1：当涉及两表关联聚合计算时，应填充空值、分别聚合计算至没有结果表外的维度后，再进行结果表的关联和计算</h1>
     <p class="post-meta">
-      <time class="dt-published" datetime="2024-01-19T00:00:00+00:00" itemprop="datePublished">Jan 19, 2024
+      <time class="dt-published" datetime="2024-01-19T00:00:00+08:00" itemprop="datePublished">Jan 19, 2024
       </time></p>
   </header>
 
@@ -50,24 +58,87 @@
     <p>在对两表进行关联及聚合运算时，经常出现结果不一致的情况，对原因进行了分析，发现问题出在了先关联再聚合，还是先聚合再关联上，基于sqlite进行了测试。</p>
 
 <h2 id="数据准备">数据准备</h2>
-<p>table t1:<br />
-| month  | dimension1 | metrics1 | 
-|:——:|:———-:|:——–:| 
-| 202305 | a          | 4752     | 
-| 202305 | b          | 6659     | 
-| 202305 | c          | 325      |</p>
+<p>table t1:</p>
 
-<p>table t2:<br />
-|   month | dimension1   | dimension2   |   metrics2 | 
-|——–:|:————-|:————-|———–:| 
-|  202305 | b            | p1           |        239 | 
-|  202305 | a            | p1           |         51 | 
-|  202305 | b            | p2           |          3 | 
-|  202305 | c            | p3           |          9 | 
-|  202305 | b            | p3           |        176 | 
-|  202305 | a            | p3           |         25 |</p>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">month</th>
+      <th style="text-align: center">dimension1</th>
+      <th style="text-align: center">metrics1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">202305</td>
+      <td style="text-align: center">a</td>
+      <td style="text-align: center">4752</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">202305</td>
+      <td style="text-align: center">b</td>
+      <td style="text-align: center">6659</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">202305</td>
+      <td style="text-align: center">c</td>
+      <td style="text-align: center">325</td>
+    </tr>
+  </tbody>
+</table>
 
-<p>目标：<br />
+<p>table t2:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">month</th>
+      <th style="text-align: center">dimension1</th>
+      <th style="text-align: center">dimension2</th>
+      <th style="text-align: center">metrics2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">202305</td>
+      <td style="text-align: center">b</td>
+      <td style="text-align: center">p1</td>
+      <td style="text-align: center">239</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">202305</td>
+      <td style="text-align: center">a</td>
+      <td style="text-align: center">p1</td>
+      <td style="text-align: center">51</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">202305</td>
+      <td style="text-align: center">b</td>
+      <td style="text-align: center">p2</td>
+      <td style="text-align: center">3</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">202305</td>
+      <td style="text-align: center">c</td>
+      <td style="text-align: center">p3</td>
+      <td style="text-align: center">9</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">202305</td>
+      <td style="text-align: center">b</td>
+      <td style="text-align: center">p3</td>
+      <td style="text-align: center">176</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">202305</td>
+      <td style="text-align: center">a</td>
+      <td style="text-align: center">p3</td>
+      <td style="text-align: center">25</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>目标：<br>
 在month、dimension2维度下，对metrics1、metrics2求和，并求sum(metrics2)/sum(metrics1)。</p>
 
 <h2 id="先关联再聚合">先关联再聚合</h2>
@@ -83,12 +154,42 @@
 <span class="k">group</span> <span class="k">by</span> <span class="n">t1</span><span class="p">.</span><span class="k">month</span><span class="p">,</span> <span class="n">t2</span><span class="p">.</span><span class="n">dimension2</span><span class="p">;</span>
 </code></pre></div></div>
 
-<p>输出结果：<br />
-| month     | dimension2 | metrics1 | metrics2  | pct     | 
-| :—:     | :—:      | :—:    | :—:     | :—:   | 
-| 202305	| p1	     | 11411	| 290	    | 25414.0 | 
-| 202305	| p2	     | 6659	    | 3	        | 451.0   | 
-| 202305	| p3	     | 11736	| 210	    | 17894.0 |</p>
+<p>输出结果：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">month</th>
+      <th style="text-align: center">dimension2</th>
+      <th style="text-align: center">metrics1</th>
+      <th style="text-align: center">metrics2</th>
+      <th style="text-align: center">pct</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">202305</td>
+      <td style="text-align: center">p1</td>
+      <td style="text-align: center">11411</td>
+      <td style="text-align: center">290</td>
+      <td style="text-align: center">25414.0</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">202305</td>
+      <td style="text-align: center">p2</td>
+      <td style="text-align: center">6659</td>
+      <td style="text-align: center">3</td>
+      <td style="text-align: center">451.0</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">202305</td>
+      <td style="text-align: center">p3</td>
+      <td style="text-align: center">11736</td>
+      <td style="text-align: center">210</td>
+      <td style="text-align: center">17894.0</td>
+    </tr>
+  </tbody>
+</table>
 
 <h2 id="先聚合再关联">先聚合再关联</h2>
 <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">a</span> <span class="k">as</span> <span class="p">(</span>
@@ -117,12 +218,42 @@
 	<span class="k">on</span> <span class="n">a</span><span class="p">.</span><span class="k">month</span> <span class="o">=</span> <span class="n">b</span><span class="p">.</span><span class="k">month</span><span class="p">;</span>
 </code></pre></div></div>
 
-<p>输出结果：<br />
-| month     | dimension2 | metrics1 | metrics2 | pct     | 
-| :—:     | :—:      | :—:    | :—:    | :—:   | 
-| 202305	| p1	     | 11736	| 290	   | 24710.0 | 
-| 202305	| p2	     | 11736	| 3	       | 256.0   | 
-| 202305	| p3	     | 11736	| 210	   | 17894.0 |</p>
+<p>输出结果：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">month</th>
+      <th style="text-align: center">dimension2</th>
+      <th style="text-align: center">metrics1</th>
+      <th style="text-align: center">metrics2</th>
+      <th style="text-align: center">pct</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">202305</td>
+      <td style="text-align: center">p1</td>
+      <td style="text-align: center">11736</td>
+      <td style="text-align: center">290</td>
+      <td style="text-align: center">24710.0</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">202305</td>
+      <td style="text-align: center">p2</td>
+      <td style="text-align: center">11736</td>
+      <td style="text-align: center">3</td>
+      <td style="text-align: center">256.0</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">202305</td>
+      <td style="text-align: center">p3</td>
+      <td style="text-align: center">11736</td>
+      <td style="text-align: center">210</td>
+      <td style="text-align: center">17894.0</td>
+    </tr>
+  </tbody>
+</table>
 
 <h2 id="分析和总结">分析和总结</h2>
 <p>dimension1维度用不到，先关联再聚合时，t2表中并不是每个dimension2维度都有对应的dimension1维度，导致关联获取的数据不全，影响最终结果，先聚合再关联避免了这个问题。</p>
@@ -130,7 +261,8 @@
 <h2 id="版本记录">版本记录</h2>
 <p>2024-01-19，初稿。</p>
 
-  </div><a class="u-url" href="/data_science/2024/01/19/sql_rule_1.html" hidden></a>
+  </div>
+<a class="u-url" href="/data_science/2024/01/19/sql_rule_1.html" hidden></a>
 </article>
 
       </div>
@@ -142,7 +274,7 @@
       <div class="footer-col-wrapper">
         <div class="footer-col footer-col-1">
           <ul class="contact-list">
-            <li class="p-name">yzlun&#39;s blog</li>
+            <li class="p-name">yzlun's blog</li>
             
           </ul>
         </div>
@@ -161,6 +293,7 @@
   
     </div>
   
-  </footer></body>
+  </footer>
+</body>
 
 </html>
