@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "sql及Python常用时间处理函数汇总"
+title: "编程学习（二）：sql及Python常用时间处理函数汇总"
 date: 2024-01-27
 categories: Data_Science
 excerpt: 在sql及Python数据分析过程中，经常需要对时间进行转换和处理，对此进行了总结。

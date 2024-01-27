@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "pandas agg方法浅谈"
+title: "编程学习（一）：pandas agg方法浅谈"
 date: 2023-12-24
 categories: Data_Science
 excerpt: 数据分析使用pandas，在聚合groupby的情况下，经常使用agg方法来计算多个统计值，如极值、平均值、分位值等，在计算对象是单列、多列条件下，如何使用。
