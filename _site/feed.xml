@@ -1,4 +1,63 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-01-24T22:53:44+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">yzlun’s blog</title><entry><title type="html">sql避坑1：当涉及两表关联聚合计算时，应填充空值、分别聚合计算至没有结果表外的维度后，再进行结果表的关联和计算</title><link href="http://localhost:4000/data_science/2024/01/19/sql_rule_1.html" rel="alternate" type="text/html" title="sql避坑1：当涉及两表关联聚合计算时，应填充空值、分别聚合计算至没有结果表外的维度后，再进行结果表的关联和计算" /><published>2024-01-19T00:00:00+08:00</published><updated>2024-01-19T00:00:00+08:00</updated><id>http://localhost:4000/data_science/2024/01/19/sql_rule_1</id><content type="html" xml:base="http://localhost:4000/data_science/2024/01/19/sql_rule_1.html"><![CDATA[<p>在对两表进行关联及聚合运算时，经常出现结果不一致的情况，对原因进行了分析，发现问题出在了先关联再聚合，还是先聚合再关联上，基于sqlite进行了测试。</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-01-27T20:57:47+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">yzlun’s blog</title><entry><title type="html">sql及Python常用时间处理函数汇总</title><link href="http://localhost:4000/data_science/2024/01/27/general_time_processing_methods.html" rel="alternate" type="text/html" title="sql及Python常用时间处理函数汇总" /><published>2024-01-27T00:00:00+08:00</published><updated>2024-01-27T00:00:00+08:00</updated><id>http://localhost:4000/data_science/2024/01/27/general_time_processing_methods</id><content type="html" xml:base="http://localhost:4000/data_science/2024/01/27/general_time_processing_methods.html"><![CDATA[<p>在sql及Python数据分析过程中，经常需要对时间进行转换和处理，对此进行了总结。</p>
+
+<h2 id="sql">sql</h2>
+<h3 id="implala">implala</h3>
+<!-- _includes/mermaid.html -->
+<script src="/assets/js/mermaid.min.js"></script>
+
+<div class="mermaid">
+  
+flowchart TD
+a[string]
+b[timestamp]
+c[unix_timestamp]
+
+a -- to_timestamp(string dt, string pattern) --&gt; b
+b -- from_timestamp(timestamp t, string pattern) --&gt; a
+a -- unix_timestamp(string dt, string pattern) --&gt; c
+c -- from_unixtime(bigint unixtime, string pattern) --&gt; a
+
+b -- unix_timestamp(timestamp t) --&gt; c
+c -- to_timestamp(bigint unixtime) --&gt; b
+
+</div>
+<script>
+  mermaid.initialize({startOnLoad:true});
+</script>
+
+<h3 id="hive">hive</h3>
+<p>取消timestamp节点后，可复用impala架构。</p>
+
+<h3 id="oracle">oracle</h3>
+<!-- _includes/mermaid.html -->
+<script src="/assets/js/mermaid.min.js"></script>
+
+<div class="mermaid">
+  
+flowchart TD
+a[string]
+b[timestamp]
+
+a -- to_date(string dt, string pattern) --&gt; b
+b -- to_char(timestamp t, string pattern) --&gt; a
+
+</div>
+<script>
+  mermaid.initialize({startOnLoad:true});
+</script>
+
+<h2 id="python">Python</h2>
+<h3 id="基于datetime包">基于datetime包</h3>
+
+<h3 id="基于pandas包">基于pandas包</h3>
+
+<h2 id="分析和总结">分析和总结</h2>
+<p>可视化后，基本都是一些范式。</p>
+
+<h2 id="版本记录">版本记录</h2>
+<p>2024-01-27，初稿。</p>]]></content><author><name></name></author><category term="Data_Science" /><summary type="html"><![CDATA[在sql及Python数据分析过程中，经常需要对时间进行转换和处理，对此进行了总结。]]></summary></entry><entry><title type="html">数据分析踩坑（一）：sql数据关联及聚合原则</title><link href="http://localhost:4000/data_science/2024/01/19/data_analysis_rule_1.html" rel="alternate" type="text/html" title="数据分析踩坑（一）：sql数据关联及聚合原则" /><published>2024-01-19T00:00:00+08:00</published><updated>2024-01-19T00:00:00+08:00</updated><id>http://localhost:4000/data_science/2024/01/19/data_analysis_rule_1</id><content type="html" xml:base="http://localhost:4000/data_science/2024/01/19/data_analysis_rule_1.html"><![CDATA[<p>在对两表进行关联及聚合运算时，经常出现结果不一致的情况，对原因进行了分析，发现问题出在了先关联再聚合，还是先聚合再关联上，基于sqlite进行了测试。</p>
+
+<p>结论为当涉及两表关联聚合计算时，应填充空值、分别聚合计算至没有结果表外的维度后，再进行结果表的关联和计算。</p>
 
 <h2 id="数据准备">数据准备</h2>
 <p>table t1:</p>
