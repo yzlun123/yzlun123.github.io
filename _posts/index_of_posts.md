@@ -1,0 +1,9 @@
+| title | date | published | categories |
+| :---: | :---: | :---: | :---: |
+| my_first_post | 2023-11-21 | true | Something_New |
+| IoV_data_analysis_1 | 2023-12-05 | false | Data_Science |
+| IoV_data_analysis_2 | 2023-12-20 | false | Data_Science |
+| pandas_agg_method | 2023-12-24 | true | Data_Science |
+| sql_join_and_aggregation | 2024-01-18 | true | Data_Science |
+| analytical_architecture_is_most_important | 2024-01-27 | false | Data_Science |
+| general_time_processing_methods | 2024-01-27 | true | Data_Science |
